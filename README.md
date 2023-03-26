@@ -1,4 +1,4 @@
-# Assignment 2 - Alan, Vibilan, Jerri, Nahian
+# Assignment 3 - Alan, Vibilan, Jerri, Nahian
 
 ## Setting up virtual environment (recommended)
 
