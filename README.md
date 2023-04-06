@@ -1,5 +1,17 @@
 # Assignment 3 - Alan, Vibilan, Jerri, Nahian
 
+## TODO next
+- [ ] change argparse to include `strategy1_type` and `strategy2_type`.
+- [ ] fit a multiple linear regression model to get two coefficients: labels (returns) fromt he current month while features come from the previous month backwards.
+- [ ] re-compute featuresusing the current month.
+- [ ] get a single score for each stock.
+- [ ] select stocks with the '--top_pct' score and go long on them.
+- [ ] Repeat for the next month.
+- [ ] In the repoort, include the coefficients of the linear regression and respectice t-values.
+
+## Questions
+1. 
+
 ## Setting up virtual environment (recommended)
 
 1. Run `python3 -m venv .venv`.
