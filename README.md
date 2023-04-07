@@ -31,7 +31,7 @@
 
 To backtest the momentum strategy with an initial AUM of 10000, with 100 days to calculate returns and on the top 10% of the stock universe (AAPL, TSLA, LMT, BA, GOOG, AMZN, NVDA, META, WMT, MCD) from January 1, 2022 to March 18, 2023, run the following: 
 
-* `python backtest_strategy.py --tickers AAPL,TSLA,LMT,BA,GOOG,AMZN,NVDA,META,WMT,MCD --b 20220101 --e 20230318 --initial_aum 10000 --strategy_type M --days 100 --top_pct 10`
+* `python backtest_two_signal_strategy.py --tickers AAPL,TSLA,LMT,BA,GOOG,AMZN,NVDA,META,WMT,MCD --b 20220101 --e 20230318 --initial_aum 10000 --strategy1_type M --days1 100 --top_pct 10 --strategy2_type M --days2 100`
 
 To backtest the reversal strategy with an initial AUM of 10000, with 20 days to calculate returns and on the top 20% of the stock universe (AAPL, TSLA, GOOG, META, NFLX) from June 1, 2022 to today, run the following: 
 

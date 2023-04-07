@@ -2,7 +2,7 @@
 This module is responsible for getting, validating and organizing user input.
 """
 from datetime import datetime
-from typing import List
+from typing import List, Tuple
 import argparse
 
 # Constants
@@ -58,8 +58,10 @@ class InputData:
     b: int = -1,
     e: int = -1,
     initial_aum: int = -1,
-    strategy_type: str = -1,
-    days: int = -1,
+    strategy1_type: str = -1,
+    strategy2_type: str = -1,
+    days1: int = -1,
+    days2: int = -1,
     top_pct: int = -1) -> None:
     """
     This method initialises the InputData class.
@@ -93,15 +95,25 @@ class InputData:
     else:
       self.initial_aum = initial_aum
 
-    if strategy_type == -1:
-      self.strategy_type = get_args().parse_args().strategy_type
+    if strategy1_type == -1:
+      self.strategy1_type = get_args().parse_args().strategy1_type
     else:
-      self.strategy_type = strategy_type
+      self.strategy1_type = strategy1_type
 
-    if days == -1:
-      self.days = get_args().parse_args().days
+    if strategy2_type == -1:
+      self.strategy2_type = get_args().parse_args().strategy2_type
     else:
-      self.days = days
+      self.strategy2_type = strategy2_type
+
+    if days1 == -1:
+      self.days1 = get_args().parse_args().days1
+    else:
+      self.days1 = days1
+
+    if days2 == -1:
+      self.days2 = get_args().parse_args().days2
+    else:
+      self.days2 = days2
 
     if top_pct == -1:
       self.top_pct = get_args().parse_args().top_pct
@@ -199,45 +211,6 @@ class InputData:
       raise ValueError("Initial AUM must be a positive integer.")
     return self.initial_aum
 
-  def get_strategy_type(self) -> str:
-    """
-    Returns a validated strategy type from the user input.
-
-    Raises:
-      ValueError: If the strategy type is not a string, is not 'M' or 'R',
-        or is not a valid strategy type.
-
-    Returns:
-      str: Returns the strategy type if it has been validated.
-    """
-    if self.strategy_type is None:
-      raise ValueError("Strategy type must be a string.")
-    if not isinstance(self.strategy_type, str):
-      raise ValueError("Strategy type must be a string.")
-    if self.strategy_type.upper() != "M" and self.strategy_type.upper() != "R":
-      raise \
-        ValueError("Strategy type must be 'M' (momentum) or 'R' (reversal).")
-    return self.strategy_type
-
-  def get_days(self) -> int:
-    """
-    Returns a validated number of trading days from the user input.
-
-    Raises:
-      ValueError: If the number of trading days is not an integer, is not
-        between 1 to 250, or is not a valid number of trading days.
-
-    Returns:
-      int: Returns the number of trading days if it has been validated.
-    """
-    if self.days is None:
-      raise ValueError("Number of trading days must be specified.")
-    if not isinstance(self.days, int):
-      raise ValueError("Number of trading days must be an integer.")
-    if self.days < MIN_DAYS or self.days > MAX_DAYS:
-      raise ValueError("Number of trading days must be between 1 to 250.")
-    return self.days
-
   def get_top_pct(self) -> int:
     """
     Returns a validated top percentage from the user input.
@@ -256,3 +229,51 @@ class InputData:
     if self.top_pct < MIN_PCT or self.top_pct > MAX_PCT:
       raise ValueError("Top percentage must be between 1 to 100.")
     return self.top_pct
+
+  def get_strategy_and_days(self, n: int) -> Tuple[str, int]:
+    """
+    Returns a validated strategy type and number of trading days from
+    the user input for a given strategy (n=1 or n=2).
+
+    Args:
+      n (int): The number of the strategy (1 or 2).
+
+    Raises:
+      ValueError: If the strategy type is not a string, is not 'M' or 'R',
+        or is not a valid strategy type.
+      ValueError: If the number of trading days is not an integer, is not
+        between 1 to 250, or is not a valid number of trading days.
+
+    Returns:
+      Tuple[str, int]: Returns a tuple containing the strategy type and
+        number of trading days if both have been validated.
+    """
+    if n != 1 and n != 2:
+      raise ValueError("n must be either 1 or 2.")
+    strategy_key = f"strategy{n}_type"
+    days_key = f"days{n}"
+
+    strategy = getattr(self, strategy_key)
+    days = getattr(self, days_key)
+
+    if strategy is None:
+      raise ValueError(f"Strategy type for strategy {n} must be specified.")
+    if not isinstance(strategy, str):
+      raise ValueError(f"Strategy type for strategy {n} must be a string.")
+    if strategy.upper() != "M" and strategy.upper() != "R":
+      raise ValueError(
+        f"""Strategy type for strategy {n} must be 'M' (momentum)
+        or 'R' (reversal).""")
+
+    if days is None:
+      raise ValueError(f"""Number of trading days for strategy {n}
+        must be specified.""")
+    if not isinstance(days, int):
+      raise ValueError(f"""Number of trading days for strategy {n} must
+        be an integer.""")
+    if days < MIN_DAYS or days > MAX_DAYS:
+      raise ValueError(
+          f"Number of trading days for strategy {n} must be between 1 to 250."
+      )
+
+    return strategy, days
