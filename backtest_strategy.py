@@ -16,7 +16,7 @@ time period.
 import sys
 from src.input_data import InputData
 from src.stocks_fetcher import StocksFetcher
-from backtest import RunBacktest
+from run_backtest import RunBacktest
 from src.backtest_stats import BacktestStats
 
 sys.path.append("/.../src")
