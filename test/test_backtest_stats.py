@@ -8,7 +8,7 @@ import pytest
 import os.path
 from datetime import date
 from src.stocks_fetcher import StocksFetcher
-from src.run_backtest import RunBacktest, MOMENTUM
+from backtest import RunBacktest, MOMENTUM
 from src.backtest_stats import BacktestStats
 
 sys.path.append("/.../src")
