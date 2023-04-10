@@ -30,6 +30,7 @@ class TwoSignalStrategyBacktest:
             strategy1 = self._compute_strategy_features(stock_data, self.args.days1, self.args.strategy1_type)
             strategy2 = self._compute_strategy_features(stock_data, self.args.days2, self.args.strategy2_type)
             features = pd.concat([strategy1.shift(), strategy2.shift()], axis=1).dropna()
+            # is it confirmed dropna()?
             returns = stock_data['Close'].pct_change().shift(-1)
 
             valid_data = features.join(returns).dropna()

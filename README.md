@@ -10,7 +10,8 @@
 - [ ] In the repoort, include the coefficients of the linear regression and respectice t-values.
 
 ## Questions
-1. 
+1. How to first build the linear regression?
+2. How many days back to we go?
 
 ## Setting up virtual environment (recommended)
 
